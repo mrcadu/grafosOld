@@ -1,0 +1,5 @@
+numero de vertices:1000
+numero de arestas:199
+grau Médio:56
+grau Min:0
+grau Max:6
