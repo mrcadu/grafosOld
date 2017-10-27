@@ -49,17 +49,16 @@
 			int j = 1;
 			while(!filaVertices.empty()){
 				for (int i=0;i < vetorVertices[filaVertices.front() - 1].verticesVizinhos.size(); i++){
-					if (vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].marcado == false){
-						vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].marcado = true;
-						vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].nivelBusca = j;
-						filaVertices.push(vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice);
+					//if (vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].marcado == false){
+						//vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].marcado = true;
+						//vetorVertices[vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice - 1].nivelBusca = j;
+						//filaVertices.push(vetorVertices[filaVertices.front() - 1].verticesVizinhos[i].codigoVertice);
 					}
 				}
 				filaVertices.pop();
 				j++;
 			}
 
-	}
 	void Grafo::DFS(Vertice verticePartida)
 	{
 		for(int i = 0;i< vetorVertices.size(); i++ )
@@ -77,7 +76,7 @@
 				vetorVertices[verticeAtual - 1].marcado = true;
 				for(int i = 0; i < vetorVertices[verticeAtual - 1].verticesVizinhos.size(); i ++ )
 				{
-					filaCodigosVertice.push(vetorVertices[verticeAtual - 1].verticesVizinhos[i].codigoVertice);
+					//filaCodigosVertice.push(vetorVertices[verticeAtual - 1].verticesVizinhos[i].codigoVertice);
 				}
 			}
 		}

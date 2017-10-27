@@ -23,21 +23,18 @@ GrafoComPeso::GrafoComPeso(vector<Vertice> vetorVertices,vector<ArestaComPesos> 
 
 	}
 }
-void GrafoComPeso::inicializarGrafo(vector<Vertice> vetorVerticesInput, vector<ArestaComPesos> vetorArestasInput)
+void GrafoComPeso::inicializarGrafo(vector<Vertice> vetorVertices, vector<ArestaComPesos> vetorArestas)
 {
-	vetorVertices = vetorVerticesInput;
-	vetorArestas = vetorArestasInput;
-	for (int i =0;i <= vetorArestas.size() - 1;i++)
+	this -> vetorVertices = vetorVertices;
+        this -> vetorArestas = vetorArestas;
+	for(int i = 0;i < vetorArestas.size(); i++)
 	{
-		vetorVertices[vetorArestas[i].verticeDestino.codigoVertice - 1].verticesVizinhos.push_back(vetorVertices[vetorArestas[i].verticeOrigem.codigoVertice - 1]);
-		vetorVertices[vetorArestas[i].verticeOrigem.codigoVertice - 1].verticesVizinhos.push_back(vetorVertices[vetorArestas[i].verticeDestino.codigoVertice - 1]);
-	}
-	for(int j = 0;j < vetorArestasInput.size(); j++)
-	{
-		Vertice *verticeOrigem  = &vetorVertices[vetorArestasInput[j].verticeOrigem.codigoVertice - 1];
-		Vertice *verticeDestino  = &vetorVertices[vetorArestasInput[j].verticeDestino.codigoVertice - 1];
-		verticeOrigem->mapaDistancia[verticeDestino->codigoVertice] = vetorArestasInput[j].peso;
-		verticeDestino->mapaDistancia[verticeOrigem->codigoVertice] = vetorArestasInput[j].peso;
+            Vertice *verticeOrigem  = &vetorVertices[vetorArestas[i].verticeOrigem.codigoVertice - 1];
+            Vertice *verticeDestino  = &vetorVertices[vetorArestas[i].verticeDestino.codigoVertice - 1];
+            verticeOrigem->verticesVizinhos.push_back(*verticeDestino);
+            verticeDestino->verticesVizinhos.push_back(*verticeOrigem);
+            verticeOrigem->mapaDistancia[verticeDestino->codigoVertice] = vetorArestas[i].peso;
+            verticeDestino->mapaDistancia[verticeOrigem->codigoVertice] = vetorArestas[i].peso;
 
 	}
 }

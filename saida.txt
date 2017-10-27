@@ -1,5 +1,5 @@
 numero de vertices:1000
-numero de arestas:199
-grau Médio:56
+numero de arestas:25
+grau Médio:7
 grau Min:0
-grau Max:6
+grau Max:2

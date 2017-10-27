@@ -8,7 +8,7 @@ class Vertice{
 	public:
 	Vertice();
 	Vertice(int codigoVertice);
-	vector<Vertice> verticesVizinhos;
+        vector<Vertice> verticesVizinhos;
 	void defineCodigo(int codigo);
 	int codigoVertice;
 	bool marcado;
