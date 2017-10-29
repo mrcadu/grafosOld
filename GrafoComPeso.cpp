@@ -25,18 +25,36 @@ GrafoComPeso::GrafoComPeso(vector<Vertice> vetorVertices,vector<ArestaComPesos> 
 }
 void GrafoComPeso::inicializarGrafo(vector<Vertice> vetorVertices, vector<ArestaComPesos> vetorArestas)
 {
-	this -> vetorVertices = vetorVertices;
+	
+        this -> vetorVertices = vetorVertices;
         this -> vetorArestas = vetorArestas;
-	for(int i = 0;i < vetorArestas.size(); i++)
+	inicializarVetoresVerticesVizinhos();
+        for(int i = 0;i < vetorArestas.size(); i++)
 	{
             Vertice *verticeOrigem  = &vetorVertices[vetorArestas[i].verticeOrigem.codigoVertice - 1];
             Vertice *verticeDestino  = &vetorVertices[vetorArestas[i].verticeDestino.codigoVertice - 1];
-            verticeOrigem->verticesVizinhos.push_back(*verticeDestino);
-            verticeDestino->verticesVizinhos.push_back(*verticeOrigem);
+            verticeDestino->verticesVizinhos[getLastIteratorNumber(verticeDestino->verticesVizinhos)] = *verticeOrigem;
+            verticeOrigem->verticesVizinhos[getLastIteratorNumber(verticeOrigem->verticesVizinhos)] = *verticeDestino;
             verticeOrigem->mapaDistancia[verticeDestino->codigoVertice] = vetorArestas[i].peso;
             verticeDestino->mapaDistancia[verticeOrigem->codigoVertice] = vetorArestas[i].peso;
-
 	}
+}
+int GrafoComPeso::getLastIteratorNumber(vector<Vertice> vetorVerticesIterator)
+{
+    for(int i = 0; i < vetorVerticesIterator.capacity();i++)
+    {
+        if(vetorVerticesIterator.back().codigoVertice == vetorVerticesIterator[i].codigoVertice)
+        {
+            return i+1;
+        }
+    }
+}
+void GrafoComPeso::inicializarVetoresVerticesVizinhos()
+{
+    for(int i = 1; i < mapaNumeroVerticesVizinhos.size(); i++)
+    {
+        vetorVertices[i].verticesVizinhos.resize(mapaNumeroVerticesVizinhos[i + 1]);
+    }
 }
 vector<int> GrafoComPeso::lerGrafo()
 {
@@ -58,6 +76,7 @@ vector<int> GrafoComPeso::lerGrafo()
         {
             ArestaComPesos arestaAtual(vetorVertices[verticeOrigem - 1],vetorVertices[verticeDestino - 1],peso);
             vetorArestas.push_back(arestaAtual);
+            mapaNumeroVerticesVizinhos[verticeOrigem] += 1;
             numeroArestas += 1;
         }
         vector<int> informacoes = {numeroVertices,numeroArestas};

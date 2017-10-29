@@ -10,12 +10,15 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <list>
 
 class GrafoComPeso {
 public:
+        
 	GrafoComPeso();
 	GrafoComPeso(vector<Vertice> vetorVertices ,vector<ArestaComPesos> vetorArestas);
+        map<int,int> mapaNumeroVerticesVizinhos;
+        int getLastIteratorNumber(vector<Vertice> vetorVerticesIterator);
+        void inicializarVetoresVerticesVizinhos();
 	void inicializarGrafo(vector<Vertice> vetorVertices ,vector<ArestaComPesos> vetorArestas);
 	vector<int> lerGrafo();
 	vector<int> grau();
