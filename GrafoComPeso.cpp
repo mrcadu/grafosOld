@@ -23,38 +23,29 @@ GrafoComPeso::GrafoComPeso(vector<Vertice> vetorVertices,vector<ArestaComPesos> 
 
 	}
 }
-void GrafoComPeso::inicializarGrafo(vector<Vertice> vetorVertices, vector<ArestaComPesos> vetorArestas)
+void GrafoComPeso::inicializarGrafo(vector<Vertice> vetorVerticesInput, vector<ArestaComPesos> vetorArestasInput)
 {
 	
-        this -> vetorVertices = vetorVertices;
-        this -> vetorArestas = vetorArestas;
-	inicializarVetoresVerticesVizinhos();
+        this -> vetorVertices = vetorVerticesInput;
+        this -> vetorArestas = vetorArestasInput;
+	Vertice vertice(0);
+        for(int i = 0; i < mapaNumeroVerticesVizinhos.size(); i++)
+        {
+            int tamanho = mapaNumeroVerticesVizinhos[i + 1];
+            vetorVertices[i].verticesVizinhos.assign(tamanho,vertice);
+        }
+        
         for(int i = 0;i < vetorArestas.size(); i++)
 	{
             Vertice *verticeOrigem  = &vetorVertices[vetorArestas[i].verticeOrigem.codigoVertice - 1];
             Vertice *verticeDestino  = &vetorVertices[vetorArestas[i].verticeDestino.codigoVertice - 1];
-            verticeDestino->verticesVizinhos[getLastIteratorNumber(verticeDestino->verticesVizinhos)] = *verticeOrigem;
-            verticeOrigem->verticesVizinhos[getLastIteratorNumber(verticeOrigem->verticesVizinhos)] = *verticeDestino;
+            verticeDestino->verticesVizinhos[verticeDestino->numeroAtualIterador].defineCodigo(verticeOrigem->codigoVertice);
+            verticeOrigem->verticesVizinhos[verticeOrigem->numeroAtualIterador].defineCodigo(verticeDestino->codigoVertice);
             verticeOrigem->mapaDistancia[verticeDestino->codigoVertice] = vetorArestas[i].peso;
             verticeDestino->mapaDistancia[verticeOrigem->codigoVertice] = vetorArestas[i].peso;
+            verticeOrigem->numeroAtualIterador += 1;
+            verticeDestino->numeroAtualIterador += 1;
 	}
-}
-int GrafoComPeso::getLastIteratorNumber(vector<Vertice> vetorVerticesIterator)
-{
-    for(int i = 0; i < vetorVerticesIterator.capacity();i++)
-    {
-        if(vetorVerticesIterator.back().codigoVertice == vetorVerticesIterator[i].codigoVertice)
-        {
-            return i+1;
-        }
-    }
-}
-void GrafoComPeso::inicializarVetoresVerticesVizinhos()
-{
-    for(int i = 1; i < mapaNumeroVerticesVizinhos.size(); i++)
-    {
-        vetorVertices[i].verticesVizinhos.resize(mapaNumeroVerticesVizinhos[i + 1]);
-    }
 }
 vector<int> GrafoComPeso::lerGrafo()
 {
@@ -77,6 +68,7 @@ vector<int> GrafoComPeso::lerGrafo()
             ArestaComPesos arestaAtual(vetorVertices[verticeOrigem - 1],vetorVertices[verticeDestino - 1],peso);
             vetorArestas.push_back(arestaAtual);
             mapaNumeroVerticesVizinhos[verticeOrigem] += 1;
+            mapaNumeroVerticesVizinhos[verticeDestino] += 1;
             numeroArestas += 1;
         }
         vector<int> informacoes = {numeroVertices,numeroArestas};
@@ -113,7 +105,7 @@ void GrafoComPeso::escreverGrafo(int numeroVertices,int numeroArestas)
 	    arquivoSaida.open("saida.txt");
 	    arquivoSaida << "numero de vertices:" << numeroVertices  << endl;
 	    arquivoSaida << "numero de arestas:" << numeroArestas << endl;
-	    arquivoSaida << "grau Médio:" << grauMedio/7 << endl;
+	    arquivoSaida << "grau Médio:" << grauMedio/numeroVertices << endl;
 	    arquivoSaida << "grau Min:" << grauMinimo << endl;
 	    arquivoSaida << "grau Max:" << grauMaximo << endl;
 	//    for(int i = 0 ; i <= grafo.vetorVertices.size() - 1 ; i++ ){

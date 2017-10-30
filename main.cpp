@@ -14,7 +14,7 @@ using namespace std;
 int main(){
     GrafoComPeso grafo;
     vector <int> informacoes = grafo.lerGrafo();
-    //grafo.escreverGrafo(informacoes[0],informacoes[1]);
+    grafo.escreverGrafo(informacoes[0],informacoes[1]);
 }
 
 

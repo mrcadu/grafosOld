@@ -12,6 +12,7 @@ class Vertice{
         vector<Vertice> verticesVizinhos;
 	void defineCodigo(int codigo);
 	int codigoVertice;
+        int numeroAtualIterador;
 	bool marcado;
 	int nivelBusca;
 	map<int,int> mapaDistancia;
